@@ -270,8 +270,8 @@ if (!function_exists('dd')) {
     }
 }
 
-if (!function_exists('isDev')) {
-    function isDev(): bool
+if (!function_exists('is_dev')) {
+    function is_dev(): bool
     {
         return strtolower(config('app.mode')) === 'development';
     }
@@ -399,8 +399,8 @@ if (!function_exists('vite')) {
     }
 }
 
-if (!function_exists('viteView')) {
-    function viteView(string $template = 'index', array $params = [])
+if (!function_exists('vite_view')) {
+    function vite_view(string $template = 'index', array $params = [])
     {
         return view()
             ->getDriver()
