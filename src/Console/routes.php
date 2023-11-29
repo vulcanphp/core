@@ -10,7 +10,7 @@ return [
     ],
     [
         'command' => ['help', '-h'],
-        'info'  => 'Get help with artisan CLI command',
+        'info'  => 'Get help with vulcan CLI command',
         'callback' => [Callback::class, 'help']
     ],
     [
