@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Foundation\Kernels;
 
-use Middlewares\Csrf;
+use App\Http\Middlewares\Csrf;
 use VulcanPhp\SimpleDb\Model;
 use VulcanPhp\FastCache\Cache;
 use VulcanPhp\PhpRouter\Router;
@@ -34,7 +34,7 @@ class BootstrapKernel implements IKernel
 
         // system cache init
         Cache::init(new FastCacheDriver([
-            'path'      => root_dir('/storage/tmp'),
+            'path'      => config('app.tmp_dir'),
             'extension' => '.cache'
         ]));
 
@@ -61,7 +61,7 @@ class BootstrapKernel implements IKernel
             });
 
         // setup database
-        Database::init(config('app.database'))
+        Database::init(config('database'))
             ->getHookHandler()
             ->fallback('model_static', 'Cache', fn ($model) => cache('dbmodel_' . $model::tableName()))
             ->action('changed', fn ($table) => cache('dbmodel_' . $table)->flush())
@@ -69,16 +69,14 @@ class BootstrapKernel implements IKernel
             ->filter('result', fn ($data) => collect($data));
 
         // storage init
-        Storage::init(root_dir('/storage'));
+        Storage::init(config('app.storage_dir'));
 
         // initialize translator
         Translator::init(
             new GoogleTranslatorDriver(
                 new TranslatorFileManager([
-                    'source'    => 'en',
-                    'suffix'    => 'public',
                     'convert'   => config('app.language'),
-                    'local_dir' => storage_dir('/local'),
+                    'local_dir' => config('app.language_dir'),
                 ])
             )
         )->getDriver()->enableLazy();

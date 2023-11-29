@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Auth;
 
-use Models\User;
+use App\Models\User;
 use VulcanPhp\Core\Auth\Drivers\BasicAuthDriver;
 use VulcanPhp\Core\Auth\Interfaces\IAuth;
 use VulcanPhp\Core\Auth\Interfaces\IAuthDriver;

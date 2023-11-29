@@ -2,8 +2,8 @@
 
 namespace VulcanPhp\Core\Foundation\Kernels;
 
-use Middlewares\Cors;
-use Middlewares\WebMiddleware;
+use App\Http\Middlewares\Cors;
+use App\Http\Middlewares\WebMiddleware;
 use VulcanPhp\Core\Foundation\Interfaces\IKernel;
 use VulcanPhp\PhpRouter\Route;
 

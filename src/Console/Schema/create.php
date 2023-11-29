@@ -3,7 +3,7 @@
 return [
     'controller' => '<?php
 
-namespace Controllers{Namespace};
+namespace App\Http\Controllers{Namespace};
 
 use VulcanPhp\Core\Foundation\Controller;
 
@@ -17,7 +17,7 @@ class {ControllerName} extends Controller
 }',
     'resource_controller' => '<?php
 
-namespace Controllers{Namespace};
+namespace App\Http\Controllers{Namespace};
 
 use VulcanPhp\Core\Foundation\Controller;
 use System\Router\Interfaces\IResourceController;
@@ -88,7 +88,7 @@ class {ControllerName} extends Controller implements IResourceController
     'seeder' => '<?php
 
 use VulcanPhp\Core\Database\Interfaces\ISeeder;
-use Models\{Namespane};
+use App\Models\{Namespane};
 
 return new class implements ISeeder
 {
@@ -101,7 +101,7 @@ return new class implements ISeeder
 };',
     'model' => '<?php
 
-namespace Models{Namespace};
+namespace App\Models{Namespace};
 
 use VulcanPhp\SimpleDb\Model;
 
@@ -157,7 +157,7 @@ return new class implements IMigration
 };',
     'middleware' => '<?php
 
-namespace Middlewares{Namespace};
+namespace App\Http\Middlewares{Namespace};
 
 use VulcanPhp\PhpRouter\Http\Request;
 use VulcanPhp\PhpRouter\Http\Response;
@@ -172,7 +172,7 @@ class {MiddlewareName} implements IMiddleware
 }',
     'kernel' => '<?php
 
-namespace Kernels{Namespace};
+namespace App\Http\Kernels{Namespace};
 
 use VulcanPhp\Core\Foundation\Interfaces\IKernel;
 

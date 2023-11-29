@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Auth\Traits;
 
-use Models\UserMeta;
+use App\Models\UserMeta;
 use Exception;
 use VulcanPhp\Core\Crypto\Encryption;
 use VulcanPhp\Core\Crypto\Hash;

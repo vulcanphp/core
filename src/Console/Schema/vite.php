@@ -1,5 +1,7 @@
 <?php
 
+$vite_dir = trim(str_replace([root_dir(), DIRECTORY_SEPARATOR], ['', '/'], config('app.vite_dir')), '/');
+
 return [
     [
         'file' => 'vite.config.js',
@@ -27,7 +29,7 @@ return [
                 export default defineConfig({
                     plugins: [
                         liveReload([
-                            __dirname + './resources/vite/**/*.php',
+                            __dirname + './{$vite_dir}/**/*.php',
                         ]),
                         splitVendorChunkPlugin()
                 EOT
@@ -43,8 +45,8 @@ return [
                 'text' => <<<EOT
                     
                     ],
-                    base: process.env.NODE_ENV === "production" ? '/resources/vite/dist/' : '/resources/vite/',
-                    root: './resources/vite',
+                    base: process.env.NODE_ENV === "production" ? '/{$vite_dir}/dist/' : '/{$vite_dir}/',
+                    root: './{$vite_dir}',
                     server: {
                         strictPort: true,
                         port: 5133
@@ -54,12 +56,12 @@ return [
                         emptyOutDir: true,
                         manifest: true,
                         rollupOptions: {
-                            input: path.resolve(__dirname, './resources/vite/main.js'),
+                            input: path.resolve(__dirname, './{$vite_dir}/main.js'),
                         }
                     },
                     resolve: {
                         alias: {
-                            '@': fileURLToPath(new URL('./resources/vite', import.meta.url))
+                            '@': fileURLToPath(new URL('./{$vite_dir}', import.meta.url))
                         }
                     }
                 })
@@ -77,7 +79,7 @@ return [
 
                 module.exports = {
                     content: [
-                        "./resources/vite/**/*.{php,html,vue,js,ts,jsx,tsx}",
+                        "./{$vite_dir}/**/*.{php,html,vue,js,ts,jsx,tsx}",
                     ],
                     theme: {
                         extend: {},
@@ -231,7 +233,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/style.css',
+        'file' => $vite_dir . '/style.css',
         'contents' => [
             [
                 'text' => '',
@@ -349,7 +351,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/store.js',
+        'file' => $vite_dir . '/store.js',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -384,7 +386,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/router.js',
+        'file' => $vite_dir . '/router.js',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -408,7 +410,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/main.js',
+        'file' => $vite_dir . '/main.js',
         'contents' => [
             [
                 'text' => <<<EOT
@@ -473,7 +475,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/counter.js',
+        'file' => $vite_dir . '/counter.js',
         'feature' => 'vanilla',
         'contents' => [
             [
@@ -492,7 +494,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/javascript.svg',
+        'file' => $vite_dir . '/javascript.svg',
         'feature' => 'vanilla',
         'contents' => [
             [
@@ -503,7 +505,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/vite.svg',
+        'file' => $vite_dir . '/vite.svg',
         'feature' => 'vanilla',
         'contents' => [
             [
@@ -514,7 +516,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/index.php',
+        'file' => $vite_dir . '/index.php',
         'contents' => [
             [
                 'text' => <<<EOT
@@ -558,7 +560,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/axios.js',
+        'file' => $vite_dir . '/axios.js',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -584,7 +586,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/App.vue',
+        'file' => $vite_dir . '/App.vue',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -617,7 +619,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/.env',
+        'file' => $vite_dir . '/.env',
         'contents' => [
             [
                 'text' => <<<EOT
@@ -635,7 +637,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/views/Home.vue',
+        'file' => $vite_dir . '/views/Home.vue',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -672,7 +674,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/vite.svg',
+        'file' => $vite_dir . '/vite.svg',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -683,7 +685,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/vue.svg',
+        'file' => $vite_dir . '/vue.svg',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -694,7 +696,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/tailwind.svg',
+        'file' => $vite_dir . '/tailwind.svg',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -705,7 +707,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/components/Intro.vue',
+        'file' => $vite_dir . '/components/Intro.vue',
         'feature' => ['vue', 'tailwind'],
         'contents' => [
             [
@@ -735,7 +737,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/vue.svg',
+        'file' => $vite_dir . '/vue.svg',
         'feature' => 'vue',
         'not_feature' => 'tailwind',
         'contents' => [
@@ -747,7 +749,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/vite.svg',
+        'file' => $vite_dir . '/vite.svg',
         'feature' => 'vue',
         'not_feature' => 'tailwind',
         'contents' => [
@@ -759,7 +761,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/App.vue',
+        'file' => $vite_dir . '/App.vue',
         'feature' => 'vue',
         'not_feature' => 'tailwind',
         'contents' => [
@@ -800,7 +802,7 @@ return [
         ]
     ],
     [
-        'file' => 'resources/vite/components/HelloWorld.vue',
+        'file' => $vite_dir . '/components/HelloWorld.vue',
         'feature' => 'vue',
         'not_feature' => 'tailwind',
         'contents' => [

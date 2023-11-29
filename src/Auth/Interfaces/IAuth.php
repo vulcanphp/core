@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Auth\Interfaces;
 
-use Models\User;
+use App\Models\User;
 
 interface IAuth
 {

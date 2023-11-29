@@ -6,11 +6,16 @@ class Bucket
 {
     public static Bucket $store;
 
-    public array $data = [];
+    public array $data;
 
-    public function __construct()
+    public function __construct(array $data = [])
     {
-        self::$store = $this;
+        $this->data = $data;
+    }
+
+    public static function init(...$args): Bucket
+    {
+        return self::$store = new Bucket(...$args);
     }
 
     public static function has(string $type, $key = null): bool

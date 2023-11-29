@@ -14,7 +14,6 @@ class Vite
         'host' => 'localhost',
         'port' => 5133,
         'running' => null,
-        'base' => '/resources/vite',
         'entry' => 'main.js',
         'dist' => null,
         'manifest' => null
@@ -64,7 +63,7 @@ class Vite
             . $this->config('host')
             . ':'
             . $this->config('port')
-            . $this->config('base', '')
+            . $this->getBase()
             . '/' . trim($path, '/');
     }
 
@@ -77,7 +76,7 @@ class Vite
                 str_ireplace(
                     root_dir(),
                     trim(home_url(), '/'),
-                    $this->config('dist', root_dir('/resources/vite/dist/'))
+                    $this->config('dist', root_dir($this->getBase() . '/dist/'))
                 )
             ),
             '/'
@@ -172,8 +171,8 @@ class Vite
     {
         $manifest = $this->config(
             'dist',
-            root_dir('/resources/vite/dist/')
-        ) . 'manifest.json';
+            root_dir($this->getBase() . '/dist/')
+        ) . DIRECTORY_SEPARATOR . 'manifest.json';
 
         return $this->config['manifest'] ??= (file_exists($manifest) ?
             (array) json_decode(file_get_contents($manifest), true)
@@ -228,5 +227,10 @@ class Vite
         }
 
         return $urls;
+    }
+
+    protected function getBase(): string
+    {
+        return '/' . trim(str_replace([root_dir(), DIRECTORY_SEPARATOR], ['', '/'], config('app.vite_dir')), '/');
     }
 }

@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Auth\Traits;
 
-use Models\User;
+use App\Models\User;
 use VulcanPhp\FastCache\Interfaces\ICacheHandler;
 
 trait CacheAuth
@@ -28,7 +28,7 @@ trait CacheAuth
 
     public function SetCacheUser(User $user): self
     {
-        $this->CacheStorage->store($user->id, $user, '5 minutes');
+        $this->CacheStorage->store($user->id, $user, '10 minutes');
         return $this;
     }
 

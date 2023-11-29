@@ -87,7 +87,7 @@ class MySqlSchema
 
     private function afterSchema(): string
     {
-        return sprintf(")ENGINE=InnoDB DEFAULT CHARSET=%s COLLATE=%s;", config('app.database.charset'), config('app.database.collate'));
+        return sprintf(")ENGINE=InnoDB DEFAULT CHARSET=%s COLLATE=%s;", config('database.charset'), config('database.collate'));
     }
 
     public function build(): string

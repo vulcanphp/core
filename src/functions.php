@@ -24,14 +24,19 @@ if (!function_exists('app')) {
 if (!function_exists('root_dir')) {
     function root_dir($path = '')
     {
-        return defined('ROOT_DIR')
-            ? ROOT_DIR . $path
-            : Application::$app->rootDir . $path;
+        return str_replace(
+            '/',
+            DIRECTORY_SEPARATOR,
+            defined('ROOT_DIR') ? ROOT_DIR : Application::$app->rootDir
+        ) . (!empty($path)
+            ? DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, trim($path, '/'))
+            : ''
+        );
     }
 }
 
 if (!function_exists('bucket')) {
-    new Bucket;
+    Bucket::init();
 
     function bucket(...$args)
     {
@@ -109,23 +114,10 @@ if (!function_exists('cookie')) {
 }
 
 if (!function_exists('home_url')) {
-    function home_url($suffix = ''): string
+    function home_url($path = ''): string
     {
-        return rtrim(
-            sprintf(
-                '%s%s',
-                rtrim(
-                    config('app.root_url') !== null
-                        ? config('app.root_url')
-                        : request()->rootUrl()->absoluteUrl(),
-                    '/'
-                ),
-                !empty($suffix)
-                    ? '/' . preg_replace('~/+~', '/', trim($suffix, '/'))
-                    : ''
-            ),
-            '/'
-        ) . '/';
+        return config('app.root_url', request()->rootUrl()->absoluteUrl())
+            . (!empty($path) ? trim((string) $path, '/') : '');
     }
 }
 
@@ -134,14 +126,11 @@ if (!function_exists('resource_url')) {
     {
         return is_url($path)
             ? $path
-            : sprintf(
-                '%s%s',
-                home_url('resources'),
-                trim(
-                    (string) $path,
-                    '/'
-                )
-            );
+            : home_url(str_replace(
+                [root_dir(), DIRECTORY_SEPARATOR],
+                ['', '/'],
+                resource_dir($path)
+            ));
     }
 }
 
@@ -150,7 +139,14 @@ if (!function_exists('resource_dir')) {
     {
         return is_url($path)
             ? $path
-            : root_dir('/resources/') . trim((string) $path, '/');
+            : str_replace(
+                '/',
+                DIRECTORY_SEPARATOR,
+                config('app.resource_dir')
+            ) . (!empty($path)
+                ? DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, trim((string) $path, '/'))
+                : ''
+            );
     }
 }
 
@@ -273,7 +269,7 @@ if (!function_exists('dd')) {
 if (!function_exists('is_dev')) {
     function is_dev(): bool
     {
-        return strtolower(config('app.mode')) === 'development';
+        return boolval(config('app.development')) === true;
     }
 }
 
@@ -405,7 +401,7 @@ if (!function_exists('vite_view')) {
         return view()
             ->getDriver()
             ->getEngine()
-            ->resourceDir('resources/vite')
+            ->resourceDir(config('app.vite_dir'))
             ->template($template)
             ->render($params);
     }

@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Auth\Drivers;
 
-use Models\User;
+use App\Models\User;
 use VulcanPhp\Core\Auth\Interfaces\IAuthDriver;
 use VulcanPhp\Core\Auth\Traits\CacheAuth;
 use VulcanPhp\Core\Auth\Traits\CookieAuth;
@@ -21,38 +21,44 @@ class BasicAuthDriver implements IAuthDriver
 
         // WARNING: This is Un-Secure to Use Cookie Auth to remember logged user
         // use cookie auth <START>
-        if (!Session::has('user') && $this->HasCookieAuth())
+        if (config('auth.use_cookie') && !Session::has('user') && $this->HasCookieAuth()) {
             Session::set('user', $this->GetCookieAuth());
+        }
         // use cookie auth <END>
 
         // check if logged user
         if (Session::has('user')) {
 
-            // $user = User::find(intval(Session::get('user')));
-            /**
-             * @var $user
-             *
-             * use this $user variable instead of cache auth code
-             */
-
-            // WARNING: This is Un-Secure to Use Cache to Store Authenticate User Data
-            // use cache for authenticate user <START>
+            // get user id from session
             $id = intval(Session::get('user'));
 
-            $this->InitCacheAuth();
+            // WARNING: This is Un-Secure to Use Cache to Store Authenticate User Data
+            if (config('auth.use_cache')) {
 
-            if ($this->HasCacheUser($id))
-                $user = $this->GetCacheUser($id);
-            else {
-                $user = User::find($id);
+                // use cache for authenticate user <START>
+                $this->InitCacheAuth();
 
-                if ($user !== false) {
-                    $this->SetCacheUser($user);
+                if ($this->HasCacheUser($id)) {
+                    $user = $this->GetCacheUser($id);
+                } else {
+                    $user = User::find($id);
+
+                    if ($user !== false) {
+                        $this->SetCacheUser($user);
+                    }
                 }
-            }
 
-            $this->CloseCacheDB();
-            // use cache for authenticate user <END>
+                $this->CloseCacheDB();
+                // use cache for authenticate user <END>
+
+            } else {
+                /**
+                 * @var $user
+                 *
+                 * use this $user variable instead of cache auth code
+                 */
+                $user = User::find($id);
+            }
 
             // set or remove current user
             if ($user !== false) {
