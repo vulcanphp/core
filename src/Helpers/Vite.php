@@ -94,7 +94,7 @@ class Vite
         if ($this->config('running') !== null) {
             return $this->config('running');
         }
-        if (!isDev()) {
+        if (!is_dev()) {
             return false;
         }
 

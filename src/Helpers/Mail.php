@@ -96,7 +96,7 @@ class Mail extends PHPMailer
             return parent::send() == true;
         } catch (\Throwable $error) {
 
-            if (isDev()) throw $error;
+            if (is_dev()) throw $error;
 
             return false;
         }

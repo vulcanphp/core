@@ -23,7 +23,7 @@ class AppKernel implements IKernel
     {
         // apply pretty error handler
         PrettyError::register(
-            isDev() ? PrettyError::ENV_DEVELOPMENT : PrettyError::ENV_PRODUCTION
+            is_dev() ? PrettyError::ENV_DEVELOPMENT : PrettyError::ENV_PRODUCTION
         );
 
         // Session Start
