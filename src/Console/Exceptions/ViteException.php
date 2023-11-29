@@ -1,6 +1,6 @@
 <?php
 
-namespace VulcanPhp\Core\Console;
+namespace VulcanPhp\Core\Console\Exceptions;
 
 use Exception;
 

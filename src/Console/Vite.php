@@ -2,7 +2,7 @@
 
 namespace VulcanPhp\Core\Console;
 
-use VulcanPhp\Core\Console\ViteException;
+use VulcanPhp\Core\Console\Exceptions\ViteException;
 
 class Vite
 {
