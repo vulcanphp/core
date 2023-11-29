@@ -45,7 +45,7 @@ class Application
      */
     protected array $kernels = [
         // kernel to setup application
-        \Kernels\AppKernel::class,
+        \VulcanPhp\Core\Foundation\Kernels\BootstrapKernel::class,
 
         // kernel to load routes
         \VulcanPhp\Core\Foundation\Kernels\RouterKernel::class,
