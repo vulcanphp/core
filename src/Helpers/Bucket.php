@@ -13,107 +13,107 @@ class Bucket
         self::$store = $this;
     }
 
-    public function has(string $type, $key = null): bool
+    public static function has(string $type, $key = null): bool
     {
         return $key !== null
-            ? isset($this->data[$type][$key]) && !empty($this->data[$type][$key])
-            : isset($this->data[$type]) && !empty($this->data[$type]);
+            ? isset(self::$store->data[$type][$key]) && !empty(self::$store->data[$type][$key])
+            : isset(self::$store->data[$type]) && !empty(self::$store->data[$type]);
     }
 
-    public function set(string $type, $value, $key = null): self
+    public static function set(string $type, $value, $key = null): self
     {
         $key !== null
-            ? $this->data[$type][$key] = $value
-            : $this->data[$type] = $value;
+            ? self::$store->data[$type][$key] = $value
+            : self::$store->data[$type] = $value;
 
-        return $this;
+        return self::$store;
     }
 
-    public function push(string $type, $value, $key = null): self
+    public static function push(string $type, $value, $key = null): self
     {
-        if (!isset($this->data[$type])) {
-            $this->data[$type] = [];
+        if (!isset(self::$store->data[$type])) {
+            self::$store->data[$type] = [];
         }
 
-        if ($key !== null && !isset($this->data[$type][$key])) {
-            $this->data[$type][$key] = [];
-        }
-
-        $key !== null
-            ? array_push($this->data[$type][$key], $value)
-            : array_push($this->data[$type], $value);
-
-        return $this;
-    }
-
-    public function unshift(string $type, $value, $key = null): self
-    {
-        if (!isset($this->data[$type])) {
-            $this->data[$type] = [];
+        if ($key !== null && !isset(self::$store->data[$type][$key])) {
+            self::$store->data[$type][$key] = [];
         }
 
         $key !== null
-            ? array_unshift($this->data[$type][$key], $value)
-            : array_unshift($this->data[$type], $value);
+            ? array_push(self::$store->data[$type][$key], $value)
+            : array_push(self::$store->data[$type], $value);
 
-        return $this;
+        return self::$store;
     }
 
-    public function pop(string $type, $key = null)
+    public static function unshift(string $type, $value, $key = null): self
+    {
+        if (!isset(self::$store->data[$type])) {
+            self::$store->data[$type] = [];
+        }
+
+        $key !== null
+            ? array_unshift(self::$store->data[$type][$key], $value)
+            : array_unshift(self::$store->data[$type], $value);
+
+        return self::$store;
+    }
+
+    public static function pop(string $type, $key = null)
     {
         return $key !== null
-            ? array_pop($this->data[$type][$key])
-            : array_pop($this->data[$type]);
+            ? array_pop(self::$store->data[$type][$key])
+            : array_pop(self::$store->data[$type]);
     }
 
-    public function shift(string $type, $key = null)
+    public static function shift(string $type, $key = null)
     {
         return $key !== null
-            ? array_shift($this->data[$type][$key])
-            : array_shift($this->data[$type]);
+            ? array_shift(self::$store->data[$type][$key])
+            : array_shift(self::$store->data[$type]);
     }
 
-    public function get(string $type, $key = null, $default = null)
+    public static function get(string $type, $key = null, $default = null)
     {
         return $key !== null
-            ? ($this->data[$type][$key] ?? $default)
-            : ($this->data[$type] ?? $default);
+            ? (self::$store->data[$type][$key] ?? $default)
+            : (self::$store->data[$type] ?? $default);
     }
 
-    public function is(...$args): bool
+    public static function is(...$args): bool
     {
-        return boolval($this->get(...$args)) === true;
+        return boolval(self::get(...$args)) === true;
     }
 
-    public function last(string $type, $key = null)
-    {
-        return $key !== null
-            ? Arr::last($this->data[$type][$key])
-            : Arr::last($this->data[$type]);
-    }
-
-    public function first(string $type, $key = null)
+    public static function last(string $type, $key = null)
     {
         return $key !== null
-            ? Arr::first($this->data[$type][$key])
-            : Arr::first($this->data[$type]);
+            ? Arr::last(self::$store->data[$type][$key])
+            : Arr::last(self::$store->data[$type]);
     }
 
-    public function load(string $type, $callback, $key = null)
+    public static function first(string $type, $key = null)
     {
         return $key !== null
-            ? ($this->data[$type][$key] ??= call_user_func($callback))
-            : ($this->data[$type] ??= call_user_func($callback));
+            ? Arr::first(self::$store->data[$type][$key])
+            : Arr::first(self::$store->data[$type]);
     }
 
-    public function remove(string $type, $key = null): self
+    public static function load(string $type, $callback, $key = null)
+    {
+        return $key !== null
+            ? (self::$store->data[$type][$key] ??= call_user_func($callback))
+            : (self::$store->data[$type] ??= call_user_func($callback));
+    }
+
+    public static function remove(string $type, $key = null): self
     {
         if ($key !== null) {
-            unset($this->data[$type][$key]);
+            unset(self::$store->data[$type][$key]);
         } else {
-            unset($this->data[$type]);
+            unset(self::$store->data[$type]);
         }
 
-        return $this;
+        return self::$store;
     }
 }

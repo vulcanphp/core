@@ -149,7 +149,6 @@ class Str
         return $string;
     }
 
-
     public static function limit(string $string, int $limit = 100, string $end = '..'): string
     {
         if (mb_strwidth($string, 'UTF-8') <= $limit) {
@@ -158,7 +157,6 @@ class Str
 
         return rtrim(mb_strimwidth($string, 0, $limit, '', 'UTF-8')) . $end;
     }
-
 
     public static function limitWords(string $string, int $limit = 10, string $end = '...'): string
     {

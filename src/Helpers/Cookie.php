@@ -7,7 +7,6 @@ namespace VulcanPhp\Core\Helpers;
  */
 class Cookie
 {
-
     public static function get(?string $key = null, $default = null)
     {
         if (null === $key) {
