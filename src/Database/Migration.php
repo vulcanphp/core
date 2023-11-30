@@ -26,14 +26,14 @@ class Migration
                 continue;
             }
 
-			$filepath = $this->seedpath . DIRECTORY_SEPARATOR . $seed;
+			$filepath = $this->schemapath . DIRECTORY_SEPARATOR . $seed;
 
-            if (!file_exists($file_path)) {
+            if (!file_exists($filepath)) {
                 $this->log("ALERT! " . $migration . " This File is Does Not Exist");
                 continue;
             }
 
-            $instance = require $file_path;
+            $instance = require $filepath;
 
             if (!$instance instanceof IMigration) {
                 $this->log("ALERT! " . $className . " This Class Must be Implement " . IMigration::class);
@@ -63,17 +63,17 @@ class Migration
 
     public function applyRollback(): void
     {
-        $last_migrate = $this->getLastMigration();
-        $file_path    = $this->schemapath . $last_migrate;
+        $lastmigrate 	= $this->getLastMigration();
+        $filepath    	= $this->schemapath . DIRECTORY_SEPARATOR . $lastmigrate;
 
-        if (empty($last_migrate) || !file_exists($file_path)) {
+        if (empty($lastmigrate) || !file_exists($filepath)) {
             $this->log("Nothing to Rollback");
             exit;
         }
 
-        $instance = require $file_path;
+        $instance = require $filepath;
 
-        $this->log('Rolling Back ' . $last_migrate);
+        $this->log('Rolling Back ' . $lastmigrate);
 
         try {
             $this->pdo->exec($instance->down());
@@ -82,9 +82,9 @@ class Migration
             exit;
         }
 
-        $this->removeMigration($last_migrate);
+        $this->removeMigration($lastmigrate);
 
-        $this->log('Done Rollback ' . $last_migrate);
+        $this->log('Done Rollback ' . $lastmigrate);
     }
 
     protected function createMigrationsTable()
