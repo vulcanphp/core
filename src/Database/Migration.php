@@ -26,7 +26,7 @@ class Migration
                 continue;
             }
 
-			$filepath = $this->schemapath . DIRECTORY_SEPARATOR . $seed;
+			$filepath = $this->schemapath . DIRECTORY_SEPARATOR . $migration;
 
             if (!file_exists($filepath)) {
                 $this->log("ALERT! " . $migration . " This File is Does Not Exist");
