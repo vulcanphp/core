@@ -18,7 +18,7 @@ class Seeder
                 continue;
             }
 
-            $filepath = $this->seedpath . $seed;
+			$filepath = $this->seedpath . DIRECTORY_SEPARATOR . $seed;
 
             if (!file_exists($filepath)) {
                 $this->log("ALERT! " . $seed . " This File is Does Not Exist");
