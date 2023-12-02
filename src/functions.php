@@ -54,7 +54,7 @@ if (!function_exists('abort')) {
 }
 
 if (!function_exists('config')) {
-    function config(string $map, $default = null, $reload = false): mixed
+    function config(string $map, $default = null, $reload = false)
     {
         $map   = explode('.', $map);
         $stage = array_shift($map);
@@ -299,7 +299,7 @@ if (!function_exists('encode_string')) {
     function encode_string($value): ?string
     {
         if (in_array(gettype($value), ['array'])) {
-            $value = json_encode($value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+            $value = json_encode($value, JSON_UNESCAPED_UNICODE);
         } elseif (in_array(gettype($value), ['object'])) {
             $value = serialize($value);
         }
@@ -309,38 +309,30 @@ if (!function_exists('encode_string')) {
 }
 
 if (!function_exists('decode_string')) {
-    function decode_string(?string $value): mixed
+    function decode_string(?string $value)
     {
         if ($value === null) {
             return $value;
         }
 
-        $array = json_decode(
-            $value,
-            true,
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-        );
+        $decoded = null;
 
-        if (is_null($array) && strpos($value, '{') === 0) {
-            $array = json_decode(
-                stripslashes($value),
+        if (strpos($value, '{') === 0) {
+            $decoded = json_decode(
+                preg_replace(['/,+/', '/\[,/'], [',', '['], $value),
                 true,
-                JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+                JSON_UNESCAPED_UNICODE
             );
-        }
-
-        if (is_array($array)) {
-            $value = $array;
         } elseif (preg_match("#^((N;)|((a|O|s):[0-9]+:.*[;}])|((b|i|d):[0-9.E-]+;))$#um", $value)) {
             if (function_exists('mb_unserialize')) {
-                $array = mb_unserialize($value);
+                $decoded = mb_unserialize($value);
             } else {
-                $array = unserialize($value);
+                $decoded = unserialize($value);
             }
+        }
 
-            if (is_array($array)) {
-                $value = $array;
-            }
+        if (in_array(gettype($decoded), ['object', 'array'])) {
+            $value = $decoded;
         }
 
         return $value;
