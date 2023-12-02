@@ -316,7 +316,7 @@ if (!function_exists('decode_string')) {
         }
 
         $decoded = null;
-
+		
 		if (strpos($value, '{') === 0 || strpos($value, '[{') === 0) {
             $decoded = json_decode(
                 preg_replace(['/,+/', '/\[,/'], [',', '['], $value),
