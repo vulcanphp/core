@@ -56,7 +56,7 @@ class Create
         $location   = root_dir('/app/Http/Controllers/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), '/')) . '/' . $name . '.php';
+        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR . $name . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {
@@ -77,7 +77,7 @@ class Create
         $location   = root_dir('/app/Models/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), '/')) . '/' . $name . '.php';
+        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR . $name . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {
@@ -98,7 +98,7 @@ class Create
         $location   = root_dir('/app/Http/Middlewares/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), '/')) . '/' . $name . '.php';
+        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR . $name . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {
@@ -119,7 +119,7 @@ class Create
         $location   = root_dir('/app/Http/Kernels/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), '/')) . '/' . $name . '.php';
+        $filepath   = $this->CheckDirLocation(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR)) . DIRECTORY_SEPARATOR . $name . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {
@@ -140,7 +140,7 @@ class Create
         $location   = root_dir('/resources/views/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(strtolower(rtrim($location . $this->joinFolders($div), '/'))) . '/' . strtolower($name) . '.php';
+        $filepath   = $this->CheckDirLocation(strtolower(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR))) . DIRECTORY_SEPARATOR . strtolower($name) . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {
@@ -160,7 +160,7 @@ class Create
         $location   = root_dir('/resources/views/mail/');
         $div        = explode('/', $name);
         $name       = array_pop($div);
-        $filepath   = $this->CheckDirLocation(strtolower(rtrim($location . $this->joinFolders($div), '/'))) . '/' . strtolower($name) . '.php';
+        $filepath   = $this->CheckDirLocation(strtolower(rtrim($location . $this->joinFolders($div), DIRECTORY_SEPARATOR))) . DIRECTORY_SEPARATOR . strtolower($name) . '.php';
         $filepath   = str_replace('/', DIRECTORY_SEPARATOR, $filepath);
 
         if (!file_exists($filepath)) {

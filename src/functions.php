@@ -29,7 +29,7 @@ if (!function_exists('root_dir')) {
             DIRECTORY_SEPARATOR,
             defined('ROOT_DIR') ? ROOT_DIR : Application::$app->rootDir
         ) . (!empty($path)
-            ? DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, trim($path, '/'))
+            ? DIRECTORY_SEPARATOR . str_replace('/', DIRECTORY_SEPARATOR, ltrim($path, '/'))
             : ''
         );
     }

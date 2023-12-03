@@ -20,9 +20,9 @@ class {ControllerName} extends Controller
 namespace App\Http\Controllers{Namespace};
 
 use VulcanPhp\Core\Foundation\Controller;
-use System\Router\Interfaces\IResourceController;
+use VulcanPhp\PhpRouter\Routing\Interfaces\IResource;
 
-class {ControllerName} extends Controller implements IResourceController
+class {ControllerName} extends Controller implements IResource
 {
     /**
      * @return mixed
