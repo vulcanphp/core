@@ -88,7 +88,7 @@ class {ControllerName} extends Controller implements IResource
     'seeder' => '<?php
 
 use VulcanPhp\Core\Database\Interfaces\ISeeder;
-use App\Models\{Namespane};
+use App\Models{Namespane};
 
 return new class implements ISeeder
 {
