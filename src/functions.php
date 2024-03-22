@@ -307,9 +307,9 @@ if (!function_exists('encode_string')) {
 }
 
 if (!function_exists('decode_string')) {
-    function decode_string(?string $value)
+    function decode_string($value)
     {
-        if ($value === null) {
+        if (!is_string($value)) {
             return $value;
         }
 
