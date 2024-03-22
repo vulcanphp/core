@@ -313,20 +313,14 @@ if (!function_exists('decode_string')) {
             return $value;
         }
 
-        $decoded = null;
+        $decoded = json_decode(
+            preg_replace(['/,+/', '/\[,/'], [',', '['], $value),
+            true,
+            JSON_UNESCAPED_UNICODE
+        );
 
-        if (strpos($value, '{') === 0 || strpos($value, '[{') === 0) {
-            $decoded = json_decode(
-                preg_replace(['/,+/', '/\[,/'], [',', '['], $value),
-                true,
-                JSON_UNESCAPED_UNICODE
-            );
-        } elseif (preg_match("#^((N;)|((a|O|s):[0-9]+:.*[;}])|((b|i|d):[0-9.E-]+;))$#um", $value)) {
-            if (function_exists('mb_unserialize')) {
-                $decoded = mb_unserialize($value);
-            } else {
-                $decoded = unserialize($value);
-            }
+        if (!is_array($decoded) && preg_match("#^((N;)|((a|O|s):[0-9]+:.*[;}])|((b|i|d):[0-9.E-]+;))$#um", $value)) {
+            $decoded = mb_unserialize($value);
         }
 
         if (in_array(gettype($decoded), ['object', 'array'])) {
