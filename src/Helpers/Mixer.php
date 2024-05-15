@@ -92,7 +92,12 @@ class Mixer
             $attrs = array_merge($attrs, $script['attrs']);
             if ($invalid) {
                 if (is_file($script['value']) || is_url($script['value'])) {
-                    $scripts .= file_get_contents($script['value']);
+                    $scripts .= file_get_contents($script['value'], false, stream_context_create([
+                        'ssl' => [
+                            'verify_peer' => false,
+                            'verify_peer_name' => false,
+                        ],
+                    ]));
                 } else {
                     $scripts .= $script['value'];
                 }
